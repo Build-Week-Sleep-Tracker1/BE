@@ -1,3 +1,4 @@
+// Update with your config settings.
 const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/sleeptracker"
 
 
@@ -6,7 +7,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './databasebase/sleeptracker.db3'
+      filename: './database/sleeptracker.db3'
     },
     useNullAsDefault: true,
     migrations: {
