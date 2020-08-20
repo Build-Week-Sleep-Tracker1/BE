@@ -13,8 +13,8 @@ exports.up = function(knex) {
     tbl.increments();
     tbl.datetime('start_time', {precision: 6});
     tbl.datetime('end_time', {precision: 6});
-    tbl.integer('total_hours').notNullable;
-    tbl.integer('awakeness').notNullable;
+    tbl.integer('total_hours').notNullable();
+    tbl.integer('awakeness').notNullable();
     tbl.integer('user_id')
       .unsigned()
       .notNullable
