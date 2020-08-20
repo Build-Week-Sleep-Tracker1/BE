@@ -45,7 +45,7 @@ router.put('/sleeptracker/:id', restricted, (req, res) => {
   })
   .catch(err => {
     console.log(err);
-    res.status(500).json({ message: "API Erorr", error: err.message })
+    res.status(500).json({ message: "API Error", error: err.message })
   })
 })
 

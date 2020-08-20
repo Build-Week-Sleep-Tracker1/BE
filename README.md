@@ -248,3 +248,31 @@ Code: 200 (Successful Edit)
   "total_hours": (changed hours if applicable),
   "awakeness": (changed hours if applicable)
 }
+```
+
+Code: 404 (Unsuccesful Update)
+```
+{
+  message: "The entry could not be updated"
+}
+```
+Code 500 (Internal Error)
+```
+{
+  message: "API Error", error: err.message
+}
+```
+
+### Delete Requests
+**HTTP Method:** *Delete*
+**URL:** */auth/sleepdtracker/:id*
+
+Deletes a single entry
+
+### Response
+Code: 200 (Succesfully Deleted Task)
+```
+{
+  message: The entry has been removed
+}
+```
