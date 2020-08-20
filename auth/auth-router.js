@@ -41,8 +41,8 @@ router.post('/login', (req, res) => {
           token
         });
       } else {
-        res.status(400).json({
-          message: "Please provide username and password"
+        res.status(401).json({
+          message: "Invalid username or password"
         });
       }
     })
