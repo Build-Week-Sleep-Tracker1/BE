@@ -2,12 +2,12 @@ const db = require('../database/dbConfig.js');
 
 module.exports = {
   add,
-  addSleepTime,
+  addSleepEntry,
   findBy,
   findById,
   findSleepListById,
-  updateSleepTime,
-  removeSleepTime,
+  updateSleepEntry,
+  removeSleepEntry,
 }
 
 async function add(user){
@@ -27,33 +27,33 @@ function findById(id){
   return db('users').where({ id }).first();
 }
 
-async function addSleepTime(timeslept){
+async function addSleepEntry(timeslept){
   try {
     const [id] = await db('sleeptracker').inser(timeslept, id);
 
-    return findSleepTimeById(id);
+    return findSleepEntryById(id);
   } catch (error) {
     throw error;
   }
 }
 
-function findSleepTimeById(id) {
+function findSleepEntryById(id) {
   return db('sleeptracker').where({ id }).first()
 }
 
 function findSleepListById(id) {
   return db('sleeptrackere as s')
   .join('users as u', 's.user_id', 'u.id')
-  .select('s.user_id')
+  .select('s.user_id', 's.date', 's.hours', 's.ranking')
 }
 
-function updateSleepTime(id, changes) {
+function updateSleepEntry(id, changes) {
   return db('sleeptracker')
   .where({ id })
   .update(changes)
 }
 
-function removeSleepTime(id) {
+function removeSleepEntry(id) {
   return db('sleeptracker')
   .where('id', id)
   .del();
