@@ -1,15 +1,15 @@
 # Back-End
-
+  
 <h2> Root URL: https://be-sleeptracker.herokuapp.com/api </h2>
 
 | Method | Description                           | Endpoint             |
 | ------ | ------------------------------------- | -------------------- |
 | POST   | Create a user account                 | /auth/register       |
 | POST   | Login a user                          | /auth/login          |
-| POST   | Create a Sleep Entry                  | /user/sleeptracker   |
-| GET    | Get List of Entries                   | /user/:id/sleeptracker |
-| PUT    | Update Sleep Entry                    | /user/sleeptracker/:id      |
-| DELETE | Delete Sleep Entry                    | /user/sleeptracker/:id      |
+| POST   | Create a Sleep Entry                  | /users/sleeptracker   |
+| GET    | Get List of Entries                   | /users/:id/sleeptracker |
+| PUT    | Update Sleep Entry                    | /users/sleeptracker/:id      |
+| DELETE | Delete Sleep Entry                    | /users/sleeptracker/:id      |
 
 <h2> User  Register/Login Structure </h2>
 
