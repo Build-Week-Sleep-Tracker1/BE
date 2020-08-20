@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken');
 const Users = require('./users-model.js');
 const { restricted } = require('../auth/authenticate-middleware');
 
-router.post('/sleeptracker', restricted, (req, res) => {
-  cosole.log(req.body);
+router.post('/sleeptracker/', restricted, (req, res) => {
   Users.addSleepEntry(req.body)
   .then(sleepentry => {
-    res.status(200).json(sleepentry);
+    console.log(sleepentry);
+    res.status(201).json(sleepentry);
   })
   .catch(err => {
     console.log(err)
-    err.status(500).json({message: "API Error", error: err.message});
+    res.status(500).json({message: "API Error", error: err.message});
   });
 });
 

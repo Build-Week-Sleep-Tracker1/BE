@@ -9,7 +9,7 @@ router.post('/register', (req, res) => {
   const credentials = req.body;
   if (isValid(credentials)) {
     const rounds = process.env.BCRYPT_ROUNDS || 12;
-    const has = bcryptjs.hashSync(credentials.password, rounds);
+    const hash = bcryptjs.hashSync(credentials.password, rounds);
     credentials.password = hash
 
     Users.add(credentials)
@@ -33,7 +33,7 @@ router.post('/login', (req, res) => {
   if(isValid(req.body)) {
     Users.findBy({ username: username })
     .then(([user]) => {
-      if(user && bcyrptjs.compareSync(password, user.password)) {
+      if(user && bcryptjs.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(200).json({
           message: "Ready for tracking data",

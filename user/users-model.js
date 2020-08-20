@@ -27,9 +27,9 @@ function findById(id){
   return db('users').where({ id }).first();
 }
 
-async function addSleepEntry(timeslept){
+async function addSleepEntry(sleepentry){
   try {
-    const [id] = await db('sleeptracker').inser(timeslept, id);
+    const [id] = await db('sleeptracker').insert(sleepentry, "id");
 
     return findSleepEntryById(id);
   } catch (error) {
@@ -42,9 +42,10 @@ function findSleepEntryById(id) {
 }
 
 function findSleepListById(id) {
-  return db('sleeptrackere as s')
+  return db('sleeptracker as s')
   .join('users as u', 's.user_id', 'u.id')
-  .select('s.user_id', 's.date', 's.hours', 's.ranking')
+  .select('s.user_id', 's.start_time', 's.end_time', 's.total_hours', 's.awakeness')
+  .where({user_id: id});
 }
 
 function updateSleepEntry(id, changes) {
