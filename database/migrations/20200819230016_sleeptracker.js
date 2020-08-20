@@ -17,7 +17,6 @@ exports.up = function(knex) {
     tbl.integer('awakeness');
     tbl.integer('user_id')
       .unsigned()
-      .notNullable()
       .references('id')
       .inTable('users')
       .onDelete('CASCADE')

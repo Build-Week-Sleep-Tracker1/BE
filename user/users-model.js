@@ -6,6 +6,7 @@ module.exports = {
   findBy,
   findById,
   findSleepListById,
+  findSleepEntryById,
   updateSleepEntry,
   removeSleepEntry,
 }
@@ -44,7 +45,7 @@ function findSleepEntryById(id) {
 function findSleepListById(id) {
   return db('sleeptracker as s')
   .join('users as u', 's.user_id', 'u.id')
-  .select('s.user_id', 's.start_time', 's.end_time', 's.total_hours', 's.awakeness')
+  .select('s.id','s.user_id','s.start_time', 's.end_time', 's.total_hours', 's.awakeness')
   .where({user_id: id});
 }
 

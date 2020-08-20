@@ -6,8 +6,7 @@ const { restricted } = require('../auth/authenticate-middleware');
 router.post('/sleeptracker/', restricted, (req, res) => {
   Users.addSleepEntry(req.body)
   .then(sleepentry => {
-    console.log(sleepentry);
-    res.status(201).json(sleepentry);
+    res.status(200).json(sleepentry);
   })
   .catch(err => {
     console.log(err)
@@ -26,13 +25,20 @@ router.get('/:id/sleeptracker', restricted, (req, res) => {
   });
 });
 
+router.get('/sleeptracker/:id', restricted, (req, res) => {
+  Users.findSleepEntryById(req.params.id)
+  .then (sleepentry => {
+    res.status(200).json(sleepentry)
+  })
+})
+
 router.put('/sleeptracker/:id', restricted, (req, res) => {
   const changes = req.body;
 
   Users.updateSleepEntry(req.params.id, changes)
   .then(post => {
     if (post) {
-      res.status(200).json(post);
+        res.status(200).json(changes);
     } else {
       res.status(404).json({ message: 'The entry could not be updated'});
     }
@@ -43,9 +49,9 @@ router.put('/sleeptracker/:id', restricted, (req, res) => {
   })
 })
 
-router.delete('/sleeptracker/:id', restricted, (req,res) => {
+router.delete('/sleeptracker/:id', restricted, (req, res) => {
   Users.removeSleepEntry(req.params.id)
-  .then(count =>{
+  .then(count => {
     if (count > 0) {
       res.status(200).json({message: 'The entry has been removed'});
     } else {
