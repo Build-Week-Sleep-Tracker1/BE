@@ -14,7 +14,7 @@ router.post('/sleeptracker/', restricted, (req, res) => {
   });
 });
 
-router.get('/:id/sleeptracker', (req, res) => {
+router.get('/:id/sleeptracker', restricted, (req, res) => {
   Users.findSleepListById(req.params.id)
   .then(sleeplist => {
     res.status(200).json(sleeplist);
@@ -25,7 +25,7 @@ router.get('/:id/sleeptracker', (req, res) => {
   });
 });
 
-router.get('/sleeptracker/:id', (req, res) => {
+router.get('/sleeptracker/:id', restricted, (req, res) => {
   Users.findSleepEntryById(req.params.id)
   .then (sleepentry => {
     res.status(200).json(sleepentry)
