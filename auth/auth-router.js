@@ -5,16 +5,6 @@ const Users = require('../user/users-model.js');
 
 const { isValid, generateToken } = require('./authenticate-middleware');
 
-router.get('/', (req, res) => {
-  Users.findBy()
-    .then(user => {
-      res.status(200).json(user)
-    })
-    .catch(error => {
-      res.status(500).json({message: "API Error", error: err})
-    })
-})
-
 router.post('/register', (req, res) => {
   const credentials = req.body;
   if (isValid(credentials)) {
