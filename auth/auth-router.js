@@ -1,9 +1,21 @@
 const bcryptjs = require('bcryptjs');
 const router = require('express').Router();
 const { jwtSecret } = require('./secrets.js');
+const Users = require('../users/users-model.js');
 
 const Users = require('../user/users-model');
 const { isValid, generateToken } = require('./authenticate-middleware');
+
+router.get('/login', (req, res) => {
+  Users.findBy()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json({message: "API Error", error: err.message}})
+  })
+  })
+
 
 router.post('/register', (req, res) => {
   const credentials = req.body;
