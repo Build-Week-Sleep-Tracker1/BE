@@ -3,7 +3,6 @@ const router = require('express').Router();
 const { jwtSecret } = require('./secrets.js');
 const Users = require('../users/users-model.js');
 
-const Users = require('../user/users-model');
 const { isValid, generateToken } = require('./authenticate-middleware');
 
 router.get('/login', (req, res) => {
