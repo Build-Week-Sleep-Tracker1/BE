@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const Users = require('./users-model.js');
 const { restricted } = require('../auth/authenticate-middleware');
 
-router.post('/sleeptracker/', restricted, (req, res) => {
+router.post('/sleeptracker/', (req, res) => {
   Users.addSleepEntry(req.body)
   .then(sleepentry => {
     res.status(200).json(sleepentry);
@@ -32,7 +32,7 @@ router.get('/sleeptracker/:id', (req, res) => {
   })
 })
 
-router.put('/sleeptracker/:id', restricted, (req, res) => {
+router.put('/sleeptracker/:id', (req, res) => {
   const changes = req.body;
 
   Users.updateSleepEntry(req.params.id, changes)
@@ -49,7 +49,7 @@ router.put('/sleeptracker/:id', restricted, (req, res) => {
   })
 })
 
-router.delete('/sleeptracker/:id', restricted, (req, res) => {
+router.delete('/sleeptracker/:id', (req, res) => {
   Users.removeSleepEntry(req.params.id)
   .then(count => {
     if (count > 0) {
