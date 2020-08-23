@@ -12,9 +12,9 @@ router.get('/login', (req, res) => {
     res.status(200).json(users);
   })
   .catch(err => {
-    res.status(500).json({message: "API Error", error: err.message}})
+    res.status(500).json({message: "API Error", error: err.message})
   })
-  })
+})
 
 
 router.post('/register', (req, res) => {
