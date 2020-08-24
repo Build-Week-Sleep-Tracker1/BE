@@ -16,7 +16,7 @@ router.post('/:id/sleeptracker', validateUserId, (req, res) => {
     });
   } else {
     res.status(404).json({
-      message: "You cannot update this entry. Incorrect User ID in body or URL"
+      message: "You cannot post this entry. Incorrect User ID in body or URL"
     });
   }
 });
@@ -65,8 +65,6 @@ router.delete('/:id/sleeptracker/:sleepid', validateUserId, validateSleepEntry, 
   .then(count => {
     if (count > 0) {
       res.status(200).json({message: 'The entry has been removed'});
-    } else {
-      res.status(404).json({message: 'The entry could not be removed'})
     }
   })
   .catch(err => {

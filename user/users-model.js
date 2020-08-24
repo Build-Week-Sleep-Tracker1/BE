@@ -41,7 +41,7 @@ async function addSleepEntry(sleepentry){
 function findSleepEntryById(user_id, id) {
   return db('sleeptracker as s')
   .select('s.id','s.user_id','s.start_time', 's.end_time', 's.total_hours', 's.awakeness')
-  .where({user_id: user_id, id: id})
+  .where({user_id: user_id, id: id}).first()
 }
 
 function findSleepListById(id) {
