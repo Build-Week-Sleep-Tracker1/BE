@@ -14,7 +14,7 @@ module.exports = {
 async function add(user){
   try {
     const [id] = await db('users').insert(user, "id");
-    return findById(id);
+    return user
   } catch (error) {
     throw error;
   }
@@ -30,33 +30,34 @@ function findById(id){
 
 async function addSleepEntry(sleepentry){
   try {
-    const [id] = await db('sleeptracker').insert(sleepentry, "id");
-
-    return findSleepEntryById(id);
+  const [sleepid] = await db('sleeptracker').insert(sleepentry, 'id').select()
+    return {sleepentry, sleepid}
   } catch (error) {
     throw error;
   }
 }
 
-function findSleepEntryById(id) {
-  return db('sleeptracker').where({ id }).first()
+function findSleepEntryById(user_id, id) {
+  return db('sleeptracker as s')
+  .select('s.id','s.user_id','s.start_time', 's.end_time', 's.total_hours', 's.awakeness')
+  .where({user_id: user_id, id: id}).first()
 }
 
 function findSleepListById(id) {
   return db('sleeptracker as s')
   .join('users as u', 's.user_id', 'u.id')
   .select('s.id','s.user_id','s.start_time', 's.end_time', 's.total_hours', 's.awakeness')
-  .where({user_id: id});
+  .where({user_id: id}).first();
 }
 
-function updateSleepEntry(id, changes) {
+function updateSleepEntry(user_id, id, changes) {
   return db('sleeptracker')
-  .where({ id })
+  .where({ user_id: user_id, id: id }).first()
   .update(changes)
 }
 
-function removeSleepEntry(id) {
+function removeSleepEntry(user_id, id) {
   return db('sleeptracker')
-  .where('id', id)
+  .where({user_id: user_id, id: id}).first()
   .del();
 }

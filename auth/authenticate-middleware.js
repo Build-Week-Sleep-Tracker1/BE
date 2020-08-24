@@ -1,10 +1,13 @@
 const jwt = require('jsonwebtoken')
 const { jwtSecret } = require('./secrets.js');
+const Users = require('../user/users-model.js');
 
 module.exports = {
   restricted,
   generateToken,
-  isValid
+  isValid,
+  validateUserId,
+  validateSleepEntry
 }
 
 function restricted (req,res,next) {
@@ -44,5 +47,40 @@ function generateToken(user) {
   };
 
   return jwt.sign(payload, jwtSecret, options);
+}
 
+function validateUserId(req, res, next) {
+  Users.findById(req.params.id)
+  .then(user => {
+    if(user) {
+      req.user = user;
+      next()
+    } else {
+      res.status(404).json({
+        message: 'This user does not exist'
+      })
+    }
+  })
+  .catch (err => {
+    console.log(err)
+    res.status(500).json({ message: 'API Error', error: err.message})
+  });
+}
+
+function validateSleepEntry(req, res, next) {
+  Users.findSleepEntryById(req.params.id, req.params.sleepid)
+  .then(sleepentry => {
+    if(sleepentry) {
+      req.sleepentry = sleepentry;
+      next()
+    } else {
+      res.status(404).json({
+        message: 'No entry exists with this ID for this User'
+      })
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({ message: 'API Error', error: err.message})
+  })
 }
