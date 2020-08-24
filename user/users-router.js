@@ -10,7 +10,6 @@ router.post('/:id/sleeptracker', validateUserId, (req, res) => {
     .then(sleepentry => {
       res.status(200).json(sleepentry);
     })
-    Users.addAverage(req.body)
     .catch(err => {
       console.log(err)
       res.status(500).json({message: "API Error", error: err.message});
