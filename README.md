@@ -6,11 +6,11 @@
 | ------ | ------------------------------------- | -------------------- |
 | POST   | Create a user account                 | /auth/register       |
 | POST   | Login a user                          | /auth/login          |
-| POST   | Create a Sleep Entry                  | /users/sleeptracker   |
+| POST   | Create a Sleep Entry                  | /users/:id/sleeptracker   |
 | GET    | Get List of Entries                   | /users/:id/sleeptracker |
-| GET    | Get Single Sleep Entry                | /users/sleeptracker/:id |
-| PUT    | Update Sleep Entry                    | /users/sleeptracker/:id      |
-| DELETE | Delete Sleep Entry                    | /users/sleeptracker/:id      |
+| GET    | Get Single Sleep Entry                | /users/:id/sleeptracker/:sleepid |
+| PUT    | Update Sleep Entry                    | /users/:id/sleeptracker/:sleepid      |
+| DELETE | Delete Sleep Entry                    | /users/:id/sleeptracker/:sleepid      |
 
 <h2> User  Register/Login Structure </h2>
 
@@ -116,7 +116,7 @@ Code: 500 (Internal Server Error)
 ## Create a New Entry (Protected)
 **HTTP Method:** *Post*
 
-**URL:** */user/sleeptracker*
+**URL:** */user/:id/sleeptracker*
 
 Creates a new sleep entry
 
@@ -134,12 +134,14 @@ Creates a new sleep entry
 Code: 200 (Successful)
 ```
 {
-  "id": 2,
-  "start_time": null,
-  "end_time": null,
-  "total_hours": 7,
-  "awakeness": 4
-  "user_id": 1,
+  "sleepentry": {
+    "start_time": "",
+    "end_time": "",
+    "total_hours": 8,
+    "awakeness": 4,
+    "user_id": 1
+  },
+  "sleepid": 1
 }
 ```
 Code: 401 (Unauthorized)
@@ -200,8 +202,19 @@ Code: 401 (Unauthorized)
   message: "Not authorized"
 }
 ```
-
-**URL:** */users/sleeptracker/:id*
+Code: 404 (Not Found)
+```
+{
+message: "This user does not exist"
+}
+```
+Code: 500 (Internal Error)
+```
+{
+message: "API Error", error: err.message
+}
+```
+**URL:** */users/:id/sleeptracker/:sleepid*
 
 Retrieves a single Entry
 
@@ -224,11 +237,22 @@ Code: 401 (Unauthorized)
   message: "Not authorized"
 }
 ```
+Code: 404 (Not Found)
+```
+{
+  message: "This user does not exist"
+}
 
+or
+
+{
+ message: "No entry exists with this ID for this User"
+}
+```
 ###Put Requests
 **HTTP Method:** *Put*
 
-**URL:** */users/sleeptracker/:id*
+**URL:** */users/:id/sleeptracker/:sleepid*
 
 Edits a single entry
 
@@ -237,6 +261,7 @@ Edits a single entry
 {
   "total_hours": 8,
   "awakeness": 3
+  "user_id": 1
 
 }
 ```
@@ -245,15 +270,25 @@ Edits a single entry
 Code: 200 (Successful Edit)
 ```
 {
-  "total_hours": (changed hours if applicable),
-  "awakeness": (changed hours if applicable)
+  "changes": {
+    "total_hours": 10,
+    "awakeness": 4,
+    "user_id": 1
+  },
+  "sleepid": "3"
 }
 ```
 
-Code: 404 (Unsuccesful Update)
+Code: 404 (Not Found)
 ```
 {
-  message: "The entry could not be updated"
+  message: "This user does not exist"
+}
+
+or
+
+{
+ message: "No entry exists with this ID for this User"
 }
 ```
 Code 500 (Internal Error)
@@ -265,7 +300,7 @@ Code 500 (Internal Error)
 
 ### Delete Requests
 **HTTP Method:** *Delete*
-**URL:** */auth/sleepdtracker/:id*
+**URL:** */users/:id/sleepdtracker/:sleepid*
 
 Deletes a single entry
 
@@ -274,5 +309,24 @@ Code: 200 (Succesfully Deleted Task)
 ```
 {
   message: The entry has been removed
+}
+```
+
+Code: 404 (Not Found)
+```
+{
+  message: "This user does not exist"
+}
+
+or
+
+{
+ message: "No entry exists with this ID for this User"
+}
+```
+Code 500 (Internal Error)
+```
+{
+  message: "API Error", error: err.message
 }
 ```
