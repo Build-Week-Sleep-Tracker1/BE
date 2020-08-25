@@ -11,8 +11,8 @@ exports.up = function(knex) {
 
   .createTable('sleeptracker', tbl => {
     tbl.increments('id');
-    tbl.datetime('start_time', {precision: 6});
-    tbl.datetime('end_time', {precision: 6});
+    tbl.timestamp('start_time', {useTz: true, precision: 6});
+    tbl.timestamp('end_time', {useTz: true, precision: 6});
     tbl.integer('total_hours').notNullable();
     tbl.integer('awakeness').notNullable();
     tbl.integer('user_id')
