@@ -36,8 +36,8 @@ When registering and logging in, body should look like this
 | Key      | Type    | Required                |
 | -------- | ------- | ----------------------- |
 | id       | integer | Yes (server controlled) |
-| start_time | datetime  | Yes (server controlled. Defaults to time when entry is made) |
-| end_time  | datetime   | No (not initally)
+| start_time | datetime  | No (not initially) |
+| end_time  | datetime   | No (not initially)
 | total_hours | integer | Yes (May Try to get the server to do this)|
 | awakeness | integer| Yes (Controlled by Front End)|
 | user_id   | integer | Yes (Foreign Key)
@@ -63,12 +63,9 @@ This path will register a new user and should return a 201 status message along 
 ```
 Code: 201 (Created)
 {
-  "data": {
-    "id": 3,
     "username": "jsmith",
     "password": "hashedpassword"
-  }
-}
+ }
 ```
 Code: 500 (Internal Server Error)
 ```
@@ -127,7 +124,7 @@ Creates a new sleep entry
 	"start_time": "2020-08-25 04:47:47",
 	"end_time": "2020-08-25 10:47:47",
 	"total_hours": (difference of start_time and end_time),
-  "awakeness": Based on Emoji rating,
+  	"awakeness": Based on Emoji rating,
 	"user_id": 1(need this to add to correct user. get this from body of login) **Required**
 }
 ```
