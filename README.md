@@ -36,10 +36,10 @@ When registering and logging in, body should look like this
 | Key      | Type    | Required                |
 | -------- | ------- | ----------------------- |
 | id       | integer | Yes (server controlled) |
-| start_time | date  | Yes                     |
-| end_time  | date   | Yes
+| start_time | datetime  | Yes (server controlled. Defaults to time when entry is made) |
+| end_time  | datetime   | No (not initally)
 | total_hours | integer | Yes (May Try to get the server to do this)|
-| awakeness | integer| Yes (Will be frontend controlled) |
+| awakeness | integer| Yes (Controlled by Front End)|
 | user_id   | integer | Yes (Foreign Key)
 
 When posting a new entry, body should look as follows
@@ -123,25 +123,25 @@ Creates a new sleep entry
 ### Example
 ```
 {
-  "start_time": date,
-  "end_time": date,
-  "total_hours": (should be difference of start and end time)
-  "awakeness": (Based on emoji indicator on frontend)
-  "user_id": number(need this to add to correct user) **Required**
+  {
+	"start_time": "2020-08-25 04:47:47",
+	"end_time": "2020-08-25 10:47:47",
+	"total_hours": (difference of start_time and end_time),
+  "awakeness": Based on Emoji rating,
+	"user_id": 1(need this to add to correct user. get this from body of login) **Required**
 }
 ```
 ### Responses
 Code: 200 (Successful)
 ```
 {
-  "sleepentry": {
-    "start_time": "",
-    "end_time": "",
-    "total_hours": 8,
-    "awakeness": 4,
-    "user_id": 1
-  },
-  "sleepid": 1
+  "id": 1,
+  "user_id": 1,
+  "username": "check",
+  "start_time": "2020-08-25 04:47:47",
+  "end_time": "2020-08-25 10:47:47",
+  "total_hours": 7,
+  "awakeness": 4
 }
 ```
 Code: 401 (Unauthorized)
@@ -167,34 +167,35 @@ Gets list of entries from a particular users
 
 Code: 200 (Successful Retrieval)
 ```
-{
   [
     {
-      "id": 8,
+      "id": 1,
       "user_id": 1,
-      "start_time": null,
-      "end_time": null,
-      "total_hours": 8,
+      "username": "check",
+      "start_time": "2020-08-25 04:47:47",
+      "end_time": "2020-08-25 10:47:47",
+      "total_hours": 7,
       "awakeness": 4
     },
     {
-      "id": 9,
+      "id": 2,
       "user_id": 1,
-      "start_time": null,
-      "end_time": null,
-      "total_hours": 8,
+      "username": "check",
+      "start_time": "2020-08-25 04:47:47",
+      "end_time": "2020-08-25 10:47:47",
+      "total_hours": 7,
       "awakeness": 4
     },
     {
-      "id": 11,
+      "id": 3,
       "user_id": 1,
-      "start_time": null,
-      "end_time": null,
-      "total_hours": 8,
+      "username": "check",
+      "start_time": "2020-08-25 04:47:47",
+      "end_time": "2020-08-25 10:47:47",
+      "total_hours": 7,
       "awakeness": 4
     }
   ]
-}
 ```
 Code: 401 (Unauthorized)
 ```
@@ -223,12 +224,13 @@ Retrieves a single Entry
 Code: 200 (Successful Retrieval)
 ```
 {
-  "id": 8,
-  "start_time": null,
-  "end_time": null,
-  "total_hours": 8,
-  "awakeness": 4,
-  "user_id": 1
+  "id": 1,
+  "user_id": 1,
+  "username": "check",
+  "start_time": "2020-08-25 04:47:47",
+  "end_time": "2020-08-25 10:47:47",
+  "total_hours": 7,
+  "awakeness": 4
 }
 ```
 Code: 401 (Unauthorized)
@@ -259,24 +261,28 @@ Edits a single entry
 ### Example
 ```
 {
-  "total_hours": 8,
-  "awakeness": 3
-  "user_id": 1
-
+  	"start_time": "2020-08-25 04:47:47",
+  	"end_time": "2020-08-25 10:47:47",
+  	"total_hours": 6,
+    "awakeness": 4,
+  	"user_id": 1
 }
 ```
 
 ###Resposnes
 Code: 200 (Successful Edit)
 ```
-{
-  "changes": {
-    "total_hours": 10,
-    "awakeness": 4,
-    "user_id": 1
-  },
-  "sleepid": "3"
-}
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "username": "check",
+    "start_time": "2020-08-25 04:47:47",
+    "end_time": "2020-08-25 10:47:47",
+    "total_hours": 6,
+    "awakeness": 4
+  }
+]
 ```
 
 Code: 404 (Not Found)

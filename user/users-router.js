@@ -46,7 +46,7 @@ router.put('/:id/sleeptracker/:sleepid', validateUserId, validateSleepEntry, (re
     Users.updateSleepEntry(req.params.id, req.params.sleepid, changes)
     .then(post => {
       if (post) {
-        res.status(200).json({changes, sleepid: req.params.sleepid});
+        res.status(200).json(post);
       }
     })
     .catch(err => {
