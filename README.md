@@ -36,8 +36,8 @@ When registering and logging in, body should look like this
 | Key      | Type    | Required                |
 | -------- | ------- | ----------------------- |
 | id       | integer | Yes (server controlled) |
-| start_time | datetime  | No (not initially) |
-| end_time  | datetime   | No (not initially)
+| start_time | datetime  | Yes |
+| end_time  | datetime   | Yes |
 | total_hours | integer | Yes (May Try to get the server to do this)|
 | awakeness | integer| Yes (Controlled by Front End)|
 | user_id   | integer | Yes (Foreign Key)
